@@ -8,10 +8,12 @@ from .serializers import CustomUserSerializer
 from .models import CustomUser
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from rest_framework import viewsets
+from .serializers import RestaurantesSerializer
+from .models import RestaurantesModel
 
 
-
-# REGISTRO DE USUARIO 
+# REGISTRO DE USUARIO
 @api_view(['POST'])
 def register(request):
     serializer = CustomUserSerializer(data=request.data)
@@ -31,21 +33,23 @@ class user_login(APIView):
 
         if user is None:
             raise AuthenticationFailed("Usuario no encontrado")
-        
+
         if not user.check_password(password):
             raise AuthenticationFailed("Contraseña incorrecta")
 
-        return  Response ({
-            "messaje":"Logeado"
+        return Response({
+            "messaje": "Logeado"
         })
 
 # VISTA DE USUARIO LOGEADO
+
+
 def check_authentication(request):
     if request.user.is_authenticated:
         return JsonResponse({'isAuthenticated': True, 'user_id': request.user.id})
     else:
         return JsonResponse({'isAuthenticated': False})
-    
+
 
 # SALIDA DE PERFIL DE USUARIO
 @api_view(['POST'])
@@ -54,13 +58,18 @@ def user_logout(request):
     return Response({'message': 'Cierre de sesión exitoso'})
 
 
-# GET DE USER 
+# GET DE USER
 @login_required
 def get_username_view(request):
     if request.user.is_authenticated:
-        username = request.user.username  # Recupera el nombre de usuario del usuario autenticado
+        # Recupera el nombre de usuario del usuario autenticado
+        username = request.user.username
         return JsonResponse({'username': username})
     else:
         return JsonResponse({'error': 'Usuario no autenticado'}, status=401)
-    
-# LISTA DE  RESTAURANTES     
+
+
+# LISTA DE  RESTAURANTES
+class ListaRestaurantes(viewsets.ModelViewSet):
+    serializer_class = RestaurantesSerializer
+    queryset = RestaurantesModel.objects.all()

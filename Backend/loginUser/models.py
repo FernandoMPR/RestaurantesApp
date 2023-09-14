@@ -36,3 +36,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         
     def __str__(self):
         return self.email
+
+class RestaurantesModel(models.Model):
+    nombre = models.TextField(max_length=100)
+    tipo = models.TextField(max_length=100)
+    direccion = models.TextField(max_length=100)
+    telefono = models.CharField(max_length=10)

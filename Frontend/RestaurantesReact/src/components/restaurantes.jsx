@@ -1,73 +1,53 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from "react";
+import { getRestaurantes, deleteRestaurante} from "../api/dataAPI";
+import { Link } from "react-router-dom";
 
-class ListaRestaurantes extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      restaurantes: [
-        {
-          id: 1,
-          nombre: 'Restaurante Uno',
-          tipo: 'Comida italiana',
-          direccion: '123 Calle Principal',
-          telefono: '555-123-4567',
-        },
-        {
-          id: 2,
-          nombre: 'Restaurante Dos',
-          tipo: 'Comida mexicana',
-          direccion: '456 Avenida Secundaria',
-          telefono: '555-987-6543',
-        },
-        {
-          id: 3,
-          nombre: 'Restaurante Tres',
-          tipo: 'Comida asiática',
-          direccion: '789 Calle Tranquila',
-          telefono: '555-789-1234',
-        },
-        {
-            id: 3,
-            nombre: 'Restaurante Tres',
-            tipo: 'Comida asiática',
-            direccion: '789 Calle Tranquila',
-            telefono: '555-789-1234',
-          },
-          {
-            id: 3,
-            nombre: 'Restaurante Tres',
-            tipo: 'Comida asiática',
-            direccion: '789 Calle Tranquila',
-            telefono: '555-789-1234',
-          },
-          {
-            id: 3,
-            nombre: 'Restaurante Tres',
-            tipo: 'Comida asiática',
-            direccion: '789 Calle Tranquila',
-            telefono: '555-789-1234',
-          },
-        // Agrega más restaurantes según sea necesario
-      ],
-    };
-  }
+const ListaRestaurantes = () => {
+  const [data, setData] = useState([]);
+  
 
-  render() {
-    return (
-      <>
-        <h2>Lista de Restaurantes</h2>
-        <ul>
-          {this.state.restaurantes.map((restaurante) => (
-            <li key={restaurante.id}>
-              <strong>{restaurante.nombre}</strong> - {restaurante.tipo}
-              <p>Dirección: {restaurante.direccion}</p>
-              <p>Teléfono: {restaurante.telefono}</p>
-            </li>
-          ))}
-        </ul>
-      </>
-    );
-  }
-}
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const respuesta = await getRestaurantes();
+        setData(respuesta.data);
+        // console.log(respuesta.data)
+      } catch (error) {
+        console.error("No se obtuvieron datos", error);
+      }
+    }
+    fetchData();
+  }, []);
+
+  
+  const handleDelete = async (id) => {
+    try {
+      await deleteRestaurante(id);
+      const updatedData = data.filter((restaurante) => restaurante.id !== id);
+      setData(updatedData);
+    } catch (error) {
+      console.error("Error al eliminar el restaurante", error);
+    }
+  };
+
+  return (
+    <>
+      <h2>Lista de Restaurantes</h2>
+      <ul>
+        {data.map((restaurantes) => (
+          <li key={restaurantes.id}>
+            <strong>{restaurantes.nombre}</strong> - {restaurantes.tipo}
+            <p>Dirección: {restaurantes.dirrecion}</p>
+            <p>Teléfono: {restaurantes.telefono}</p>
+            <Link to={`/editar-restaurante/${restaurantes.id}`}>
+              Editar 
+            </Link>
+            <button onClick={() => handleDelete(restaurantes.id)}>Borrar</button>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+};
 
 export default ListaRestaurantes;

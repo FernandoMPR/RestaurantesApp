@@ -18,10 +18,13 @@ from django.contrib import admin
 from django.urls import path
 from loginUser import views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', views.register, name='register'),
     path('login/', views.user_login.as_view()),
     path('get_username/', views.get_username_view, name='check-authentication'),
     path('logout/', views.user_logout, name='logout'),
+    path('restaurantes/', views.ListaRestaurantes.as_view({'get': 'list', 'post':'create'}), name="ListaRestaurantes"),
+    path('restaurantes/<int:pk>/', views.ListaRestaurantes.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}), name="DetalleRestaurante"),
 ]

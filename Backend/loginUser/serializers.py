@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import CustomUser
+from .models import RestaurantesModel
 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -16,3 +17,9 @@ class CustomUserSerializer(serializers.ModelSerializer):
             user.set_password(password)
         user.save()    
         return user
+
+class RestaurantesSerializer(serializers.ModelSerializer):
+     class Meta:
+        model = RestaurantesModel
+        fields = "__all__"
+        

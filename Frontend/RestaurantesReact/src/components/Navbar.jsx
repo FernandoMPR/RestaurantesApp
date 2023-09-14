@@ -8,6 +8,7 @@ function Navigatebar() {
   const [userName, setUserName] = useState('');
 
 
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -55,12 +56,19 @@ function Navigatebar() {
           )}
             <form className="d-flex" role="search">
             {isLoggedIn ? (
+              <>
+              <Link to="/nuevo-restaurante">
+              <button className="btn btn-outline-primary mr-2">
+                Agregar Nuevo Restaurante
+              </button>
+              </Link>
               <button
                 className="btn btn-outline-danger"
                 onClick={handleLogout}
               >
                 Cerrar Sesión
               </button>
+              </>
             ) : (
               <>
                 <Link to="/signin">
