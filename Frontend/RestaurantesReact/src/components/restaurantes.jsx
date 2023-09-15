@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { getRestaurantes, deleteRestaurante} from "../api/dataAPI";
 import { Link } from "react-router-dom";
 
-const ListaRestaurantes = () => {
+const ListaRestaurantes = ({ isLoggedIn }) => {
   const [data, setData] = useState([]);
-  
 
   useEffect(() => {
     async function fetchData() {
@@ -18,7 +17,6 @@ const ListaRestaurantes = () => {
     }
     fetchData();
   }, []);
-
   
   const handleDelete = async (id) => {
     try {
@@ -30,6 +28,7 @@ const ListaRestaurantes = () => {
     }
   };
 
+
   return (
     <>
       <h2>Lista de Restaurantes</h2>
@@ -39,10 +38,17 @@ const ListaRestaurantes = () => {
             <strong>{restaurantes.nombre}</strong> - {restaurantes.tipo}
             <p>Dirección: {restaurantes.dirrecion}</p>
             <p>Teléfono: {restaurantes.telefono}</p>
+            {isLoggedIn ? (
+              <>
             <Link to={`/editar-restaurante/${restaurantes.id}`}>
               Editar 
             </Link>
             <button onClick={() => handleDelete(restaurantes.id)}>Borrar</button>
+            </>
+            ) : (
+              <>
+              </>
+            )}
           </li>
         ))}
       </ul>

@@ -6,7 +6,6 @@ function Home () {
     return (
         <>
         <Navigatebar />
-        <ListaRestaurantes />
         </>
     )
 }

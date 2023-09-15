@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function CrearRestaurante() {
+  const navigate = useNavigate();
   const [restaurante, setRestaurante] = useState({
     nombre: "",
     tipo: "",
@@ -32,10 +33,11 @@ function CrearRestaurante() {
         telefono: "",
       });
       console.log("restaurante creado", response.data);
+      navigate("/");
     } catch (error) {
       console.error("Error al crear Restaurante", error);
     }
-  };
+  }; 
 
   return (
     <>

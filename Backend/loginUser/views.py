@@ -27,6 +27,7 @@ def register(request):
 class user_login(APIView):
     def post(self, request):
         email = request.data["email"]
+
         password = request.data["password"]
 
         user = CustomUser.objects.filter(email=email).first()
@@ -42,8 +43,6 @@ class user_login(APIView):
         })
 
 # VISTA DE USUARIO LOGEADO
-
-
 def check_authentication(request):
     if request.user.is_authenticated:
         return JsonResponse({'isAuthenticated': True, 'user_id': request.user.id})

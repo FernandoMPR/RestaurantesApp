@@ -9,6 +9,8 @@ function Login() {
     password: "",
   });
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -21,9 +23,14 @@ function Login() {
         "http://localhost:8000/login/",
         formData
       );
-      console.log(response.data);
+
+      const token = response.data.token;
+
       localStorage.setItem("email", formData.email);
       localStorage.setItem("password", formData.password);
+      localStorage.setItem("token", token)
+      
+      setIsLoggedIn(true);
 
       navigate("/");
     } catch (error) {
@@ -32,27 +39,51 @@ function Login() {
   };
 
 
+
+
   return (
-    <div>
-       <h2>Iniciar Sesión</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="Correo electrónico"
-        />
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          placeholder="Contraseña"
-        />
-        <button type="submit">Iniciar Sesión</button>
-      </form>
-      <Link to="/">Ir a la página principal</Link>
+    <div className="container">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <div className="card mt-5">
+            <div className="card-body">
+              <h2 className="text-center">Iniciar Sesión</h2>
+              <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label htmlFor="email">Correo electrónico</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Ingrese su correo electrónico"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="password">Contraseña</label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Ingrese su contraseña"
+                  />
+                </div>
+                <button type="submit" className="btn btn-primary btn-block">
+                  Iniciar Sesión
+                </button>
+              </form>
+              <p className="mt-3 text-center">
+                <a href="/">Ir a la página principal</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
