@@ -10,8 +10,8 @@ import Home from "./pages/home";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  //COMPROBACION DE USUARIO LOGEADO
   const canActivate = () => {
-    // Verifica si el usuario está autenticado, por ejemplo, comprobando si existe en el localStorage
     const user = localStorage.getItem("user");
     return user !== null;
   };
@@ -21,6 +21,7 @@ function App() {
     localStorage.removeItem("user");
   };
 
+  //RUTAS Y RUTAS PROTEGIDAS
   return (
     <>
       <BrowserRouter>

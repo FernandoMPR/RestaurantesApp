@@ -3,10 +3,12 @@ import { useParams, useNavigate, Navigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { putRestauranteID } from "../api/dataAPI";
 
 const EditarRestaurante = () => {
-  const { id } = useParams(); // Obtener la ID del restaurante desde la URL
+  const { id } = useParams(); // OBTENER ID DE LA URL
   const navigate = useNavigate();
+
 
   const [restaurante, setRestaurante] = useState({
     nombre: "",
@@ -15,10 +17,10 @@ const EditarRestaurante = () => {
     telefono: "",
   });
 
+  //OBTENER DATOS DE RESTAURANTE MEDIANTE ID PRESENTES O FUTUROS
   useEffect(() => {
     async function fetchData() {
       try {
-        // Realizar una solicitud GET para obtener los detalles del restaurante por su ID
         const response = await axios.get(
           `http://localhost:8000/api/restaurantes/${id}/`
         );
@@ -33,6 +35,7 @@ const EditarRestaurante = () => {
     fetchData();
   }, [id]);
 
+  // ALMACEN DE MAP POR NOMBRE Y VALOR   
   const handleChange = (e) => {
     const { name, value } = e.target;
     setRestaurante({
@@ -41,16 +44,19 @@ const EditarRestaurante = () => {
     });
   };
 
+  //PETICION DE API PARA ACTUALIZAR RESTURANTE (POST)
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8000/api/restaurantes/${id}/`, restaurante);
+      const response = await putRestauranteID(id ,restaurante)
+      if (response.status === 200){
       console.log("Restaurante actualizado correctamente");
       navigate("/");
       toast.success("Cambios guardados correctamente", {
         position: "top-right",
         autoClose: 3000,
       });
+    }
     } catch (error) {
       console.error("Error al actualizar el restaurante", error);
       toast.error("Error al actualizar el restaurante", {
@@ -60,9 +66,8 @@ const EditarRestaurante = () => {
     }
   };
 
-  //Validacion de solo numeros
+  //SOLO NUMEROS PARA INPUT CELULAR 
   function LimitarDigitos(input, limite) {
-    // Expresión regular que solo permite números
     const regex = /[^0-9]/g;
     input.value = input.value.replace(regex, "");
     if (input.value.length > limite) {

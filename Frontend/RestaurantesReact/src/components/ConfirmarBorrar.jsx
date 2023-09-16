@@ -1,5 +1,7 @@
 import React from "react";
 
+
+// RECUADRO DE CONFIRMAR DE ELIMINAR ELEMENTO DE RESTAURANTE
 const ConfirmationDialog = ({ message, onConfirm, onCancel }) => {
   return (
     <div className="position-absolute top-50 start-50 translate-middle d-flex align-items-center justify-content-center ">

@@ -7,11 +7,14 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  //ALMACEN USER CON EMAIL Y PASSWORD 
   const user = {
     email: email,
     password: password,
   };
 
+
+  //COMPROBACION QUE USUARIO EXISTE EN BASE DE DATOS 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -19,8 +22,6 @@ function Login() {
       if (response.status === 200) {
         console.log("Login exitoso");
         localStorage.setItem("user", JSON.stringify(user));
-
-
         navigate("/");
       } else {
         console.error("Error Login");

@@ -2,6 +2,8 @@ from rest_framework import serializers
 from .models import CustomUser
 from .models import RestaurantesModel
 
+
+#SERIALIZADOR DE PASSWORD Y VALIDACION DE USERS
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
@@ -18,7 +20,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-
+#SERIALIZADOR DE RESTAURANTES (ALL)
 class RestaurantesSerializer(serializers.ModelSerializer):
      class Meta:
         model = RestaurantesModel

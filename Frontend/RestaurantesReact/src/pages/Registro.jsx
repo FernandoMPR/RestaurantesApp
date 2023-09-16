@@ -9,6 +9,7 @@ function Registration() {
 
   const navigate = useNavigate();
 
+  //PETICION A BASE DE DATOS PARA CREAR USUARIO
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

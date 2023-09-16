@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 
-
+//PROTECCION DE RUTAS SI ES USER ESTA LOGEADO
 const ProtectedRoute = ({ canActivate , children, redirec="/signin" }) => {
   const isAuthenticated = canActivate();
   if (!isAuthenticated) {

@@ -2,6 +2,8 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.db import models
 from django.utils import timezone
 
+
+#MODELO DE BASE DE DATOS DE USERS
 class CustomUser(AbstractBaseUser):
     email = models.EmailField(unique=True, max_length=100)
     user = None
@@ -15,7 +17,7 @@ class CustomUser(AbstractBaseUser):
         return self.email
 
 
-
+#MODELO DE BASE DE DATOS DE RESTAURANTES
 class RestaurantesModel(models.Model):
     nombre = models.TextField(max_length=100)
     tipo = models.TextField(max_length=100)

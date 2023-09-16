@@ -28,7 +28,7 @@ function CrearRestaurante() {
     e.preventDefault();
     const erroresValidacion = {};
     
-    // Validar campos requeridos
+    // VALIDAR CAMPOS REQUERIDOS 
     if (!restaurante.nombre) {
       erroresValidacion.nombre = "Campo requerido";
     }
@@ -50,6 +50,7 @@ function CrearRestaurante() {
     }
 
     try {
+      //PETICION A BASE DE DATOS PARA CREAR RESTAURANTE 
       const response = await axios.post(
         "http://localhost:8000/api/restaurantes/",
         restaurante
@@ -75,9 +76,8 @@ function CrearRestaurante() {
     }
   };
 
-  //Validacion de solo numeros
+  //SOLO NUMEROS EN CELULAR 
   function LimitarDigitos(input, limite) {
-    // Expresión regular que solo permite números
     const regex = /[^0-9]/g;
     input.value = input.value.replace(regex, "");
     if (input.value.length > limite) {
@@ -105,6 +105,7 @@ function CrearRestaurante() {
                       value={restaurante.nombre}
                       onChange={handleChange}
                       placeholder="Ingrese el nombre del restaurante"
+                      required
                     />
                   </div>
                   <div className="form-group">
@@ -117,6 +118,7 @@ function CrearRestaurante() {
                           value="pizza"
                           checked={restaurante.tipo === "pizza"}
                           onChange={handleChange}
+                          required
                         />
                         Pizza
                       </label>
@@ -128,6 +130,7 @@ function CrearRestaurante() {
                           value="tacos"
                           checked={restaurante.tipo === "tacos"}
                           onChange={handleChange}
+                          required
                         />
                         Tacos
                       </label>
@@ -139,6 +142,7 @@ function CrearRestaurante() {
                           value="italian"
                           checked={restaurante.tipo === "italian"}
                           onChange={handleChange}
+                          required
                         />
                         Italian
                       </label>
@@ -150,6 +154,7 @@ function CrearRestaurante() {
                           value="fast-food"
                           checked={restaurante.tipo === "fast-food"}
                           onChange={handleChange}
+                          required
                         />
                         Fast Food
                       </label>
@@ -165,6 +170,7 @@ function CrearRestaurante() {
                       value={restaurante.direccion}
                       onChange={handleChange}
                       placeholder="Ingrese la dirección del restaurante"
+                      required
                     />
                   </div>
                   <div className="form-group">
@@ -178,6 +184,7 @@ function CrearRestaurante() {
                       onInput={(e) => LimitarDigitos(e.target, 10)}
                       onChange={handleChange}
                       placeholder="Ingrese el número de teléfono del restaurante"
+                      required
                     />
                   </div>
                   <div className="text-center mt-5">

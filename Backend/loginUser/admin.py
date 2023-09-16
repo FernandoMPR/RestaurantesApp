@@ -3,5 +3,7 @@ from .models import CustomUser
 from .models import RestaurantesModel
 # Register your models here.
 
-admin.site.register(CustomUser)
+
+#REGISTRO DE MODELOS A /ADMIN 
+admin.site.register(CustomUser) 
 admin.site.register(RestaurantesModel)

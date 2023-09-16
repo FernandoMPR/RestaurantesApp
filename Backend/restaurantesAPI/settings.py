@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
+    "http://localhost:5173", #AUTORIZACION DE HOSTO LOCAL FRONT
 ]
 
 
@@ -46,10 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
-    'rest_framework.authtoken',
-    'corsheaders',
-    "loginUser",
+    'rest_framework', #REST
+    'corsheaders', #LIBRERIA CORS
+    "loginUser", #APP
 ]
 
 REST_FRAMEWORK = {
@@ -95,13 +94,15 @@ WSGI_APPLICATION = 'restaurantesAPI.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME': "Django",
-        "USER": "sa",
-        'PASSWORD': "reds",
-        "HOST": "DESKTOP-JEQPNEP",
+        'NAME': "Django",  #NOMBRE DE BASE DE DATOS
+        "USER": "sa", #CAMBIAR A USER DE SQL
+        'PASSWORD': "reds", #CAMBIAR A SU CONTRASEÑA DE SQL
+        "HOST": "DESKTOP-JEQPNEP", #CAMBIAR A SU HOST
         "PORT": "",
     }
 }

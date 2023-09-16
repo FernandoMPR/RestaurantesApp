@@ -2,21 +2,31 @@ import React, { useState, useEffect } from "react";
 import { getRestaurantes, deleteRestaurante } from "../api/dataAPI";
 import ConfirmationDialog from "./ConfirmarBorrar";
 import "../styles/Home.css";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ListaRestaurantes = ({ isLoggedIn, canActivate }) => {
   const [data, setData] = useState([]);
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
   const [restaurantToDelete, setRestaurantToDelete] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const restaurantsPerPage = 6;
 
+  //PAGINACION
+  const indexOfLastRestaurant = currentPage * restaurantsPerPage;
+  const indexOfFirstRestaurant = indexOfLastRestaurant - restaurantsPerPage;
+  const currentRestaurants = data.slice(
+    indexOfFirstRestaurant,
+    indexOfLastRestaurant
+  );
+
+  //ACTUALIZACION DE GET DE RESTAURANTES CONTINUO
   useEffect(() => {
     async function fetchData() {
       try {
         const respuesta = await getRestaurantes();
         setData(respuesta.data);
-        console.log(respuesta.data)
+        console.log(respuesta.data);
       } catch (error) {
         console.error("No se obtuvieron datos", error);
       }
@@ -24,14 +34,13 @@ const ListaRestaurantes = ({ isLoggedIn, canActivate }) => {
     fetchData();
   }, []);
 
-
-  //BORRAR TAREA
+  //BORRAR RESTAURANTE
   const handleDelete = async (id) => {
-    // Mostrar el diálogo de confirmación
     setShowConfirmationDialog(true);
     setRestaurantToDelete(id);
   };
 
+  //CONFIRMAR BORRAR RESTAURANTE
   const confirmDelete = async () => {
     try {
       await deleteRestaurante(restaurantToDelete);
@@ -40,25 +49,33 @@ const ListaRestaurantes = ({ isLoggedIn, canActivate }) => {
       );
       setData(updatedData);
       setShowConfirmationDialog(false);
-      toast.success('Se ha eliminado el restaurante', {
-        position: 'top-right',
-        autoClose: 3000, });
+      toast.success("Se ha eliminado el restaurante", {
+        position: "top-right",
+        autoClose: 3000,
+      });
     } catch (error) {
       console.error("Error al eliminar el restaurante", error);
     }
   };
 
+  //CANCELAR BORRAR RESTAURANTE
   const cancelDelete = () => {
     setShowConfirmationDialog(false);
     setRestaurantToDelete(null);
   };
+
+  //NUMERO DE PAGINAS 
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(data.length / restaurantsPerPage); i++) {
+    pageNumbers.push(i);
+  }
 
   return (
     <>
       <div className="container mt-4">
         <h2 className="pb-4">Lista de Restaurantes</h2>
         <div className="row">
-          {data.map((restaurante) => (
+          {currentRestaurants.map((restaurante) => (
             <div key={restaurante.id} className="col-md-4 mb-4">
               <div className="card shadow p-2 animacion">
                 <div className="card-body ">
@@ -101,6 +118,21 @@ const ListaRestaurantes = ({ isLoggedIn, canActivate }) => {
             </div>
           ))}
         </div>
+        <ul className="pagination justify-content-center">
+      {pageNumbers.map((number) => (
+        <li
+          key={number}
+          className={`page-item ${currentPage === number ? "active" : ""}`}
+        >
+          <button
+            className="page-link"
+            onClick={() => setCurrentPage(number)}
+          >
+            {number}
+          </button>
+        </li>
+      ))}
+    </ul>
       </div>
       {showConfirmationDialog && (
         <ConfirmationDialog
