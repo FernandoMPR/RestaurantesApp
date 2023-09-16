@@ -1,0 +1,73 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+@import url("https://fonts.cdnfonts.com/css/morganite");
+
+.nava {
+  background: rgb(12, 22, 34) !important;
+}
+
+.bgc {
+  background: rgb(12, 22, 34) !important;
+  min-height: 100vh;
+  min-width: 100vw; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.has-error {
+  border-color: red; /* Cambia el color del borde a rojo */
+}
+
+.text-danger {
+  color: red; /* Cambia el color del texto a rojo */
+}
+
+nav ul {
+  gap: 1rem;
+}
+
+.btns {
+  margin-top: 10px;
+  margin-right:50px ;
+} 
+
+i {
+  padding-right: 8px;
+}
+
+h2 {
+  font-family: "Morganite", sans-serif;
+  font-size: 100px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+h5 {
+  font-family: "Montserrat", sans-serif;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+p {
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
+}
+
+label {
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+}
+.animacion {
+  transition: transform 0.2s ease-in-out;
+}
+
+.animacion:hover {
+  transform: scale(1.05); 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+}
+
+.dng {
+  background-color: aliceblue;
+  border-left: 5px solid red !important;
+  font-family: "Montserrat", sans-serif;
+}

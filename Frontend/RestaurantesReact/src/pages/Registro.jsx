@@ -1,69 +1,87 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { postUserRegister } from "../api/dataAPI";
+import { useNavigate } from "react-router-dom";
 
 function Registration() {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    user: '',  
-  });
+  const [user, setUser] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      };
-      const response = await axios.post('http://localhost:8000/register/', formData, config);
-      console.log(response.data);
-
-
-    } catch (error) {
-      if (error.response) {
-        console.error('Error de respuesta:', error.response.data);
+      const response = await postUserRegister(user, email, password);
+      if (response.status === 200) {
+        console.log("Registro exitoso");
+        navigate("/");
       } else {
-        console.error('Error:', error.message);
+        console.error("Error en el registro");
       }
+    } catch (error) {
+      console.error("Error en la solicitud:", error.message);
     }
   };
 
   return (
-    <div>
-      <h2>Registro</h2>
-      <form onSubmit={handleSubmit}>
-      <input
-          type="text"
-          name="user"
-          value={formData.user}
-          onChange={handleChange}
-          placeholder="Usuario"
-        />
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="Correo electrónico"
-        />
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          placeholder="Contraseña"
-        />
-        <button type="submit">Registrarse</button>
-      </form>
-      <Link to="/">Ir a la página principal</Link>
+    <div className="bgc">
+      <div className="container ">
+        <div className="row justify-content-center">
+          <div className="col-md-6">
+            <div className="card mt-5">
+              <div className="card-body">
+                <h2 className="text-center">Registro</h2>
+                <form onSubmit={handleSubmit}>
+                  <div className="form-group">
+                    <label htmlFor="user" className="mb-1">
+                      Usuario
+                    </label>
+                    <input
+                      className="form-control mb-4"
+                      placeholder="Ingrese un Usuario"
+                      required
+                      onChange={(e) => setUser(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="email" className="mb-1">
+                      Correo electrónico
+                    </label>
+                    <input
+                      type="email"
+                      className="form-control mb-4"
+                      placeholder="Ingrese un correo electronico"
+                      required
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="password" className="form-label">
+                      Contraseña
+                    </label>
+                    <input
+                      type="password"
+                      className="form-control mb-5"
+                      placeholder="Ingrese una contraseña"
+                      required
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </div>
+                  <div className="text-center">
+                  <button type="submit" className="btn btn-primary btn-block text-center w-75 mx-auto mt-4">
+                    Registrarse
+                  </button>
+                  </div>
+                </form>
+                <p className="mt-3 text-center">
+                  <a href="/">Ir a la página principal</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

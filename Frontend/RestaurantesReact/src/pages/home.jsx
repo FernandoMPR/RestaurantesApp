@@ -1,11 +1,12 @@
 import React from "react";
 import Navigatebar from "../components/Navbar";
-import ListaRestaurantes from "../components/restaurantes";
+import { ToastContainer } from "react-toastify";
 
-function Home () {
+function Home ({isLoggedIn, canActivate, handleLogout}) {
     return (
         <>
-        <Navigatebar />
+        <ToastContainer />
+        <Navigatebar isLoggedIn={isLoggedIn} canActivate={canActivate} handleLogout={handleLogout}/>
         </>
     )
 }

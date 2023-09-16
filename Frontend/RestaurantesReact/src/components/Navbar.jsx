@@ -1,92 +1,61 @@
-import { useState, useEffect } from "react";
 import React from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
 import ListaRestaurantes from "./restaurantes";
+import "../styles/Home.css";
 
-function Navigatebar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName, setUserName] = useState("");
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true);
-      const user = localStorage.getItem("user");
-      setUserName(user);
-    }
-  }, []);
-
-  const handleLogin = async () => {
-    const correoAlmacenado = localStorage.getItem("email");
-    const contraseñaAlmacenado = localStorage.getItem("password");
-    try {
-      const response = await axios.post("http://localhost:8000/login/", {
-        email: correoAlmacenado,
-        password: contraseñaAlmacenado,
-      });
-      localStorage.setItem("token", response.data.token);
-      setIsLoggedIn(true);
-      const user = localStorage.getItem("user");
-      setUserName(user);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  console.log(userName);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-
-    setUserName("");
-  };
-
+function Navigatebar ({ isLoggedIn, handleLogin, canActivate, handleLogout }) {
   return (
     <>
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
-      <div className="container-fluid">
-        <a className="navbar-brand" href="#">
-          Navbar
-        </a>
-        {isLoggedIn && <p className="mb-0 mr-3">Bienvenido, {userName}</p>}
-        <form className="d-flex" role="search">
-          {isLoggedIn ? (
-            <>
-              <Link to="/nuevo-restaurante">
-                <button className="btn btn-outline-primary mr-2">
-                  Agregar Nuevo Restaurante
-                </button>
-              </Link>
-              <button className="btn btn-outline-danger" onClick={handleLogout}>
-                Cerrar Sesión
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/signin">
-                <button
-                  className="btn btn-outline-success"
-                  type="button"
-                  onClick={handleLogin}
-                >
-                  Iniciar Sesión
-                </button>
-              </Link>
-              <Link to="/signup">
-                <button className="btn btn-outline-success" type="button">
-                  Registrarse
-                </button>
-              </Link>
-            </>
-          )}
-        </form>
+      <nav className="navbar navbar-expand-lg bg-body-tertiary nava">
+        <div className="container-fluid">
+          <a className="navbar-brand" href="#">
+            
+          </a>
+          <form className="d-flex" role="search">
+            <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <ul className="nav ms-auto flex-column flex-md-row bd-navbar-nav nav-indicator">
+                {canActivate() ? (
+                  <>
+                    <li className="nav-item">
+                      <a href="/nuevo-restaurante" className="btn btn-outline-primary mr-2">
+                        Nuevo Restaurante
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <button className="btn btn-danger" onClick={handleLogout}>
+                        Cerrar Sesión
+                      </button>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className="nav-item">
+                      <a href="/signin" className="nav-item">
+                        <button
+                          className="btn btn-outline-primary"
+                          type="button"
+                          onClick={handleLogin}
+                        >
+                          <i className="bi bi-person-circle" />
+                          Iniciar Sesión
+                        </button>
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a href="/signup" className="btn btn-primary">
+                        Registrarse
+                      </a>
+                    </li>
+                  </>
+                )}
+              </ul>
+            </div>
+          </form>
+        </div>
+      </nav>
+      <div>
+        <ListaRestaurantes isLoggedIn={isLoggedIn} canActivate={canActivate}/>
       </div>
-    </nav>
-    <div>
-      <ListaRestaurantes isLoggedIn={isLoggedIn}/>
-    </div>
     </>
   );
 }
