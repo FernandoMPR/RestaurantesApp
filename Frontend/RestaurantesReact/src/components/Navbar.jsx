@@ -4,6 +4,8 @@ import "../styles/Home.css";
 
 
 function Navigatebar ({ isLoggedIn, handleLogin, canActivate, handleLogout }) {
+  const email = localStorage.getItem("email");
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary nava">
@@ -16,6 +18,9 @@ function Navigatebar ({ isLoggedIn, handleLogin, canActivate, handleLogout }) {
               <ul className="nav ms-auto flex-column flex-md-row bd-navbar-nav nav-indicator">
                 {canActivate() ? (
                   <>
+                  <li className="nombre">
+                    <p className="text-white">{email}</p>
+                    </li>
                     <li className="nav-item">
                       <a href="/nuevo-restaurante" className="btn btn-outline-primary mr-2">
                         Nuevo Restaurante

@@ -22,6 +22,7 @@ function Login() {
       if (response.status === 200) {
         console.log("Login exitoso");
         localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("email", email)
         navigate("/");
       } else {
         console.error("Error Login");

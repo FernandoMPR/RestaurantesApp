@@ -71,3 +71,8 @@ label {
   border-left: 5px solid red !important;
   font-family: "Montserrat", sans-serif;
 }
+
+.nombre {
+  margin-right: 30px;
+  margin-top: 5px;
+}
