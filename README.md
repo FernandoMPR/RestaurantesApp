@@ -18,3 +18,6 @@
 
 
  *Para tener correcto funcionamiento ambos servidores deben estar activos.
+
+
+**Contenedores Docker probados solamente en sistema operativo Windows.
