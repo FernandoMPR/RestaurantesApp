@@ -76,6 +76,7 @@ function CrearRestaurante() {
     }
   };
 
+  
   //SOLO NUMEROS EN CELULAR 
   function LimitarDigitos(input, limite) {
     const regex = /[^0-9]/g;

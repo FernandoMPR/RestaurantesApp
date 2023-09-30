@@ -17,6 +17,8 @@ class CustomUser(AbstractBaseUser):
         return self.email
 
 
+
+
 #MODELO DE BASE DE DATOS DE RESTAURANTES
 class RestaurantesModel(models.Model):
     nombre = models.TextField(max_length=100)

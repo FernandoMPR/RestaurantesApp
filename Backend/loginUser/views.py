@@ -46,6 +46,8 @@ class LoginView(APIView):
         })
 
 
+
+
 # VISTA DE USUARIO LOGEADO
 def check_authentication(request):
     if request.user.is_authenticated:
@@ -70,6 +72,7 @@ def get_username_view(request):
         return JsonResponse({'username': username})
     else:
         return JsonResponse({'error': 'Usuario no autenticado'}, status=401)
+
 
 
 # LISTA DE  RESTAURANTES

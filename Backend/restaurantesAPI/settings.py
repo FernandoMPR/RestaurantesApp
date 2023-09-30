@@ -96,17 +96,6 @@ WSGI_APPLICATION = 'restaurantesAPI.wsgi.application'
 
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'mssql',
-        'NAME': "Django",  #NOMBRE DE BASE DE DATOS
-        "USER": "sa", #CAMBIAR A USER DE SQL
-        'PASSWORD': "reds", #CAMBIAR A SU CONTRASEÑA DE SQL
-        "HOST": "DESKTOP-JEQPNEP", #CAMBIAR A SU HOST
-        "PORT": "",
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
